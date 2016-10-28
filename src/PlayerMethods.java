@@ -1,5 +1,3 @@
-import javax.swing.JOptionPane;
-
 import jaco.mp3.player.MP3Player;
 
 public class PlayerMethods implements PlayerInterface {

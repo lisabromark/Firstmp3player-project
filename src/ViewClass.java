@@ -105,7 +105,7 @@ public class ViewClass implements ActionListener {
 
 		if (e.getSource() == btnOpen) {
 
-			JFileChooser fileChooser = new JFileChooser("/home/lisabromark/workspace/Firstmp3player-project");
+			JFileChooser fileChooser = new JFileChooser();
 			FileNameExtensionFilter filter = new FileNameExtensionFilter("MP3 file", "mp3");
 			fileChooser.setFileFilter(filter);
 			int returnVal = fileChooser.showOpenDialog(null);
