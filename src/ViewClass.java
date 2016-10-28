@@ -17,7 +17,11 @@ import javax.swing.SwingConstants;
 
 public class ViewClass implements ActionListener {
 
+	// Class object = new constructor. Necessary to initialize new object.
+
 	PlayerMethods playerMethods = new PlayerMethods();
+
+	// Defining attributes
 
 	public JFrame frame;
 	private JButton btnPlay = new JButton("play");
@@ -26,13 +30,9 @@ public class ViewClass implements ActionListener {
 	private JButton btnOpen = new JButton("open");
 	private JLabel lblMyMusic = new JLabel("my music");
 
-	
-
-
 	/**
-	 * Create the application.
+	 * Create the application. Constructor for this class.
 	 */
-	
 
 	public ViewClass() {
 		createGUI();
@@ -52,10 +52,13 @@ public class ViewClass implements ActionListener {
 		frame.getContentPane().setBackground(Color.PINK);
 		btnPlay.setFont(new Font("FreeSerif", Font.BOLD, 16));
 		btnPlay.setBounds(27, 80, 107, 22);
+		btnPlay.setEnabled(false);
 		btnStop.setFont(new Font("FreeSerif", Font.BOLD, 16));
 		btnStop.setBounds(321, 79, 117, 25);
+		btnStop.setEnabled(false);
 		btnPause.setFont(new Font("FreeSerif", Font.BOLD, 16));
 		btnPause.setBounds(170, 79, 117, 25);
+		btnPause.setEnabled(false);
 		btnOpen.setFont(new Font("FreeSerif", Font.BOLD, 16));
 		btnOpen.setBounds(113, 43, 249, 25);
 		lblMyMusic.setHorizontalAlignment(SwingConstants.CENTER);
@@ -85,50 +88,43 @@ public class ViewClass implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		try {
-			if (e.getSource() == btnPlay) {
-				playerMethods.play();
-			}
-		} catch (Exception e4) {
-			
+
+		if (e.getSource() == btnPlay) {
+			playerMethods.play();
+
 		}
-		try {
-			if (e.getSource() == btnStop) {
+
+		if (e.getSource() == btnStop) {
+			playerMethods.stop();
+		}
+
+		if (e.getSource() == btnPause) {
+			playerMethods.pause();
+
+		}
+
+		if (e.getSource() == btnOpen) {
+
+			JFileChooser fileChooser = new JFileChooser("/home/lisabromark/workspace/Firstmp3player-project");
+			FileNameExtensionFilter filter = new FileNameExtensionFilter("MP3 file", "mp3");
+			fileChooser.setFileFilter(filter);
+			int returnVal = fileChooser.showOpenDialog(null);
+			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				playerMethods.stop();
+				
+				btnPlay.setEnabled(true);
+				btnStop.setEnabled(true);
+				btnPause.setEnabled(true);
+				File songToPlay = fileChooser.getSelectedFile();
+				playerMethods.setPlayer(new MP3Player(songToPlay));
+				String nameOfSong = fileChooser.getSelectedFile().getName();
+				lblMyMusic.setText(nameOfSong);
+
+				playerMethods.open();
+
 			}
-		} catch (Exception e3) {
-						
-		}
-		try {
-			if (e.getSource() == btnPause) {
-				playerMethods.pause();
-			}
-		} catch (Exception e2) {
-			
-		}
-
-		try {
-			if (e.getSource() == btnOpen) {
-
-				JFileChooser fileChooser = new JFileChooser("/home/lisabromark/workspace/Firstmp3player-project");
-				FileNameExtensionFilter filter = new FileNameExtensionFilter("MP3 file", "mp3");
-				fileChooser.setFileFilter(filter);
-					int returnVal = fileChooser.showOpenDialog(null);
-					if (returnVal == JFileChooser.APPROVE_OPTION) {
-						File songToPlay = new File("" + fileChooser.getSelectedFile());
-						String nameOfSong = fileChooser.getSelectedFile().getName();
-						playerMethods.stop();
-						playerMethods.setPlayer(new MP3Player(songToPlay));
-						playerMethods.open();
-						lblMyMusic.setText(nameOfSong);
-
-					}
-				}
-		} catch (HeadlessException e1) {
-			
-		} 
-
 		}
 
 	}
 
+}

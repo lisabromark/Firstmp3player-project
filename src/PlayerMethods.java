@@ -21,30 +21,26 @@ public class PlayerMethods implements PlayerInterface {
 	@Override
 	public void open() {
 		player.play();
-
 	}
 
 	@Override
 	public void play() {
-				player.play();
-		
+
+		player.play();
+
 	}
 
 	@Override
 	public void stop() {
-				if (player != null){
-				player.stop();
-						
-		}else if (player == null){
-			JOptionPane.showMessageDialog(null,"Please open a file first!");
-		}
+
+		player.stop();
+
 	}
-	
+
 	@Override
 	public void pause() {
+
 		player.pause();
-	
+
 	}
-
-
 }
