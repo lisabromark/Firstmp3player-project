@@ -116,22 +116,34 @@ public class ViewClass implements ActionListener {
 
 				File songToPlay = fileChooser.getSelectedFile();
 				String nameOfSong = fileChooser.getSelectedFile().getName();
-
-				// making sure no song is playing when opening a new file (song)
-
+				
+				/**
+				 * making sure no song is playing when opening a new file (song)
+				 */
+				
 				playerMethods.stop();
+				
+				/**
+				 * using setter to set the current variable "songToPlay"
+				 */
+								
+				
 				playerMethods.setPlayer(new MP3Player(songToPlay));
 				playerMethods.open();
+				
+				/**
+				 * after opening a file, play/stop/pause-buttons are enabled
+				 */
 
-				// after opening a file, play/stop/pause-buttons are enabled
 
 				btnPlay.setEnabled(true);
 				btnStop.setEnabled(true);
 				btnPause.setEnabled(true);
 
-				// adding a text label that will show which file is selected
-				// (song is playing)
-
+				/**
+				 * adding a text label that will show which file is selected (song is playing)
+				 */
+				
 				lblMyMusic.setText(nameOfSong);
 
 			}
