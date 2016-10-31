@@ -11,17 +11,17 @@ import javax.swing.JFrame;
 import jaco.mp3.player.MP3Player;
 import javax.swing.JLabel;
 import java.awt.Font;
-import java.awt.HeadlessException;
-
 import javax.swing.SwingConstants;
 
 public class ViewClass implements ActionListener {
 
-	// Class object = new constructor. Necessary to initialize new object.
+	/**
+	 * Class object = new constructor. Necessary to initialize new object.
+	 */
 
 	PlayerMethods playerMethods = new PlayerMethods();
-
-	// Defining attributes
+	JFileChooser fileChooser = new JFileChooser();
+	FileNameExtensionFilter filter = new FileNameExtensionFilter("MP3 file", "mp3");
 
 	public JFrame frame;
 	private JButton btnPlay = new JButton("play");
@@ -41,7 +41,8 @@ public class ViewClass implements ActionListener {
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * Initialize the contents of the frame. Disabling play/stop/pause-buttons
+	 * if no file is opened.
 	 */
 	private void createGUI() {
 		frame = new JFrame();
@@ -91,7 +92,6 @@ public class ViewClass implements ActionListener {
 
 		if (e.getSource() == btnPlay) {
 			playerMethods.play();
-
 		}
 
 		if (e.getSource() == btnStop) {
@@ -100,27 +100,39 @@ public class ViewClass implements ActionListener {
 
 		if (e.getSource() == btnPause) {
 			playerMethods.pause();
-
 		}
+
+		/**
+		 * JFileChooseer enables user to select a file when pressing
+		 * Open-button, a filter is applied to show mp3-files only. Enabling
+		 * play/stop/pause-buttons if a file is opened.
+		 */
 
 		if (e.getSource() == btnOpen) {
 
-			JFileChooser fileChooser = new JFileChooser();
-			FileNameExtensionFilter filter = new FileNameExtensionFilter("MP3 file", "mp3");
 			fileChooser.setFileFilter(filter);
 			int returnVal = fileChooser.showOpenDialog(null);
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
+
+				File songToPlay = fileChooser.getSelectedFile();
+				String nameOfSong = fileChooser.getSelectedFile().getName();
+
+				// making sure no song is playing when opening a new file (song)
+
 				playerMethods.stop();
-				
+				playerMethods.setPlayer(new MP3Player(songToPlay));
+				playerMethods.open();
+
+				// after opening a file, play/stop/pause-buttons are enabled
+
 				btnPlay.setEnabled(true);
 				btnStop.setEnabled(true);
 				btnPause.setEnabled(true);
-				File songToPlay = fileChooser.getSelectedFile();
-				playerMethods.setPlayer(new MP3Player(songToPlay));
-				String nameOfSong = fileChooser.getSelectedFile().getName();
-				lblMyMusic.setText(nameOfSong);
 
-				playerMethods.open();
+				// adding a text label that will show which file is selected
+				// (song is playing)
+
+				lblMyMusic.setText(nameOfSong);
 
 			}
 		}
