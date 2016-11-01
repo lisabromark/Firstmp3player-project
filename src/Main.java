@@ -1,9 +1,9 @@
-import jaco.mp3.player.MP3Player;
+//import jaco.mp3.player.MP3Player;
 
 public class Main {
 
 		
-	public MP3Player player;
+	//public MP3Player player;
 	
 	/**
 	 * Launch the application.
